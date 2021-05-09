@@ -3,5 +3,5 @@ from . import views
 
 
 urlpatterns = [
-    path('<int:id>', views.chainView),
+    path('<str:name>', views.chainView),
 ]

@@ -11,4 +11,10 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         id = kwargs['id']
-        local_evolution_chain(id)
+
+        try:
+            local_evolution_chain(id)
+        except (ConnectionError, OSError):
+            self.stderr.write("Error: db unavailable or network issues")
+        else:
+            self.stdout.write(f"Done! {id} registered")

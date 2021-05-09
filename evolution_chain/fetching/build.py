@@ -5,12 +5,9 @@ def chain_start(resource_id):
     
     fetch = [pb.evolution_chain(resource_id).chain]
 
-    data_struct = {
-        'species': None,
-        'evolves_to': []
-    }
+    data_struct = []
 
-    construct_chain(fetch, data_struct['evolves_to'])
+    construct_chain(fetch, data_struct)
 
     return data_struct
 

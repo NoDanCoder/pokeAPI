@@ -1,11 +1,19 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from .fetching.loader import local_evolution_chain
+from .fetching.pokechain import get_poke_data
 
 import pokebase as pb
 
 # Create your views here.
-def chainView(resquest, id):
-    
-    data = local_evolution_chain(id)
-    return JsonResponse(data.data_fetch)
+def chainView(resquest, name):
+
+    try:
+        data = get_poke_data(name)
+    except (ConnectionError, OSError):
+        return JsonResponse({'error': 'Server error'}, status=500)
+    else:
+        if data.get('error', False):
+            return JsonResponse(data, status=404)
+        return JsonResponse(data, status=200)
+
+    return JsonResponse(pokemon)
