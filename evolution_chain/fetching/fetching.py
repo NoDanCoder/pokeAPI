@@ -6,16 +6,10 @@ pb.common.ENDPOINTS.append('evolution-chain/local')
 
 def get_data_offline(endpoint, resource_id=None):
 
-    error_msg = {'error': "Resource couldn't be found, calling pokemon by his varieties may work!"}
-
-    try:
-        data = pb.cache.load(endpoint, resource_id)
-        if data('results', False):
-            data = error_msg
-    except (KeyError):
-        data = error_msg
-    finally:
-        return data
+    data = pb.cache.load(endpoint, resource_id)
+    if isinstance(data, dict) and data.get('results', []):
+        raise KeyError()
+    return data
 
 
 def get_data(endpoint, resource_id=None, subresource=None, **kwargs):

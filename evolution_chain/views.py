@@ -11,9 +11,9 @@ def chainView(resquest, name):
         data = get_poke_data(name)
     except (ConnectionError, OSError):
         return JsonResponse({'error': 'Server error'}, status=500)
+    except KeyError:
+        return JsonResponse({'error': 'Only lookup for pokemon name (not id) and not type of it'}, status=404)
     else:
-        if data.get('error', False):
-            return JsonResponse(data, status=404)
         return JsonResponse(data, status=200)
 
     return JsonResponse(pokemon)
