@@ -15,6 +15,6 @@ class Command(BaseCommand):
         try:
             local_evolution_chain(id)
         except (ConnectionError, OSError):
-            self.stderr.write("Error: db unavailable or network issues")
+            self.stderr.write("Error: data unreachable, network issues or id may does not exist")
         else:
             self.stdout.write(f"Done! {id} registered")
